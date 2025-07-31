@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Nosso Amor</title>
+<style>
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f9e6e6, #c72e2e);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    padding: 30px 40px;
+    max-width: 460px;
+    text-align: center;
+    box-shadow: 0 0 25px 10px rgba(199, 46, 46, 0.5);
+    width: 90vw;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  input[type="password"] {
+    font-size: 1.3rem;
+    padding: 12px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    width: 80%;
+    margin-top: 15px;
+    box-shadow: inset 0 0 10px #fff2f2;
+    text-align: center;
+  }
+  button {
+    margin-top: 20px;
+    background-color: #c72e2e;
+    border: none;
+    padding: 14px 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #c72e2eaa;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #8b1d1d;
+  }
+  .hidden {
+    display: none;
+  }
+  .heart {
+    font-size: 3rem;
+    color: #8b1d1d;
+    animation: pulse 1.5s infinite;
+    margin-bottom: 15px;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .text-block {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    margin-top: 20px;
+    min-height: 140px;
+    white-space: pre-wrap;
+  }
+  .messages-list {
+    text-align: left;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.15rem;
+    color: #fff;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+  }
+  .msg {
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 12px 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+  }
+  .btn-group button {
+    margin: 0 10px;
+    width: 120px;
+  }
+  .whatsapp-button {
+    background-color: #25D366;
+    color: white;
+    font-weight: 700;
+    font-size: 1.6rem;
+    padding: 15px 30px;
+    border-radius: 40px;
+    box-shadow: 0 4px 20px #25D366cc;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .whatsapp-button:hover {
+    background-color: #1ebe57;
+  }
+  audio {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 250px;
+    outline: none;
+  }
+  #final-text {
+    font-weight: 700;
+    margin-top: 20px;
+    min-height: 70px;
+    white-space: pre-wrap;
+  }
+  #question {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  /* Responsividade para celulares */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+    .text-block {
+      font-size: 1.15rem;
+      min-height: 120px;
+    }
+    input[type="password"] {
+      width: 90%;
+      font-size: 1.2rem;
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      width: 100%;
+      max-width: 300px;
+    }
+    .btn-group button {
+      width: 45%;
+      margin: 0 2.5%;
+      font-size: 1.2rem;
+    }
+    .messages-list {
+      max-height: 250px;
+      font-size: 1.05rem;
+    }
+    .whatsapp-button {
+      font-size: 1.4rem;
+      padding: 12px 20px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    audio {
+      width: 200px;
+    }
+  }
+  #audio-control {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #c72e2e;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 20px #c72e2eaa;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+  }
+  #audio-control:hover {
+    background-color: #8b1d1d;
+  }
+  /* Estilo da tela final */
+  #final-screen .heart {
+    font-size: 4rem;
+    animation: pulse 2s infinite;
+  }
+  #final-screen p {
+    font-size: 1.4rem;
+    margin: 10px 0 30px;
+  }
+  #final-message {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.1rem;
+    resize: none;
+    box-sizing: border-box;
+  }
+  #whatsapp-btn {
+    margin-top: 20px;
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 14px;
+    background-color: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: not-allowed;
+    box-shadow: 0 0 20px #aaa;
+  }
+  #whatsapp-btn.enabled {
+    cursor: pointer;
+    box-shadow: 0 0 20px #25D366aa;
+  }
+  #countdown {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #eee;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="login-screen">
+  <div class="heart">❤️</div>
+  <h1>Entre com a senha</h1>
+  <input type="password" id="password" placeholder="Digite a senha..." autofocus />
+  <button onclick="checkPassword()">Entrar</button>
+</div>
+
+<div class="container hidden" id="text-screen">
+  <div class="heart">❤️</div>
+  <div class="text-block" id="typed-text"></div>
+  <button id="continue-btn" style="margin-top: 30px; display:none;" onclick="goToMessages()">Continuar</button>
+</div>
+
+<div class="container hidden" id="messages-screen">
+  <div class="heart">❤️</div>
+  <div class="messages-list" id="messages-list"></div>
+  <div id="final-text"></div>
+  <div id="question" class="hidden">Vamos voltar para quando tudo era assim?</div>
+  <div class="btn-group hidden" id="btn-group">
+    <button onclick="backToFinal()">Sim</button>
+    <button onclick="backToFinal()">Sim</button>
+  </div>
+</div>
+
+<div class="container hidden" id="final-screen">
+  <div class="heart">❤️</div>
+  <p>Eu tô aqui, esperando a gente recomeçar juntos...</p>
+  <textarea id="final-message" placeholder="Quer me dizer algo? (opcional)" rows="3"></textarea>
+  <button id="whatsapp-btn" disabled>Conversar no WhatsApp 💬</button>
+  <p id="countdown"></p>
+</div>
+
+<div class="container hidden" id="whatsapp-screen">
+  <a href="#" target="_blank" class="whatsapp-button" id="whatsapp-link">
+    Vamos conversar no WhatsApp 💬
+  </a>
+</div>
+
+<audio id="background-audio" loop>
+  <source src="audio/nossa_cancao.mp3" type="audio/mpeg" />
+  Seu navegador não suporta áudio.
+</audio>
+
+<button id="audio-control" title="Tocar / Pausar música">▶️</button>
+
+<script>
+  const senhaCorreta = "pipica";
+  const loginScreen = document.getElementById("login-screen");
+  const textScreen = document.getElementById("text-screen");
+  const messagesScreen = document.getElementById("messages-screen");
+  const finalScreen = document.getElementById("final-screen");
+  const whatsappScreen = document.getElementById("whatsapp-screen");
+  const audio = document.getElementById("background-audio");
+  const audioControl = document.getElementById("audio-control");
+  const typedTextElem = document.getElementById("typed-text");
+  const continueBtn = document.getElementById("continue-btn");
+  const messagesList = document.getElementById("messages-list");
+  const finalTextElem = document.getElementById("final-text");
+  const questionElem = document.getElementById("question");
+  const btnGroup = document.getElementById("btn-group");
+  const whatsappBtn = document.getElementById("whatsapp-btn");
+  const finalMessageInput = document.getElementById("final-message");
+  const countdownElem = document.getElementById("countdown");
+  const whatsappLink = document.getElementById("whatsapp-link");
+
+  // Texto inicial digitado
+  const textoParaDigitar = `Era para ser apenas mais um dia comum...
+Mas quando te vi, tudo virou uma poesia desorganizada.
+
+Teu sorriso, teu jeito, tudo me pegou de surpresa.
+E agora, não sei como seguir sem você.`;
+
+  // Frases do começo do relacionamento
+  const frasesRelacionamento = [
+    "Lembra do frio na barriga ao nos vermos pela primeira vez?",
+    "O abraço gostoso que demos na porta do AP.",
+    "Sentados em frente à janela, fumando, meio abraçados.",
+    "Os primeiros dias em que tínhamos vergonha de tudo na frente um do outro.",
+    "A primeira conchinha.",
+    "A primeira briga por motivo bobo."
+  ];
+
+  const textoFinal = "Tudo isso me faz falta. Já passou, eu sei, e mesmo que tenha sido muito bom, eu amei viver tudo o que vivemos durante todo esse tempo. Porém, tenho uma pergunta:";
+
+  // Controle áudio
+  audioControl.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      audioControl.textContent = "⏸️";
+    } else {
+      audio.pause();
+      audioControl.textContent = "▶️";
+    }
+  });
+
+  // Função para verificar senha
+  function checkPassword() {
+    const passInput = document.getElementById("password").value.trim();
+    if (passInput.toLowerCase() === senhaCorreta) {
+      loginScreen.classList.add("hidden");
+      textScreen.classList.remove("hidden");
+      audio.play();
+      audioControl.textContent = "⏸️";
+      typeWriter(0);
+    } else {
+      alert("Senha incorreta, tente novamente.");
+    }
+  }
+
+  // Função de digitação do texto inicial
+  function typeWriter(i) {
+    if (i < textoParaDigitar.length) {
+      typedTextElem.textContent += textoParaDigitar.charAt(i);
+      setTimeout(() => typeWriter(i + 1), 50);
+    } else {
+      continueBtn.style.display = "inline-block";
+    }
+  }
+
+  // Vai para as mensagens do começo do relacionamento
+  function goToMessages() {
+    textScreen.classList.add("hidden");
+    messagesScreen.classList.remove("hidden");
+    messagesList.innerHTML = "";
+    finalTextElem.textContent = "";
+    questionElem.classList.add("hidden");
+    btnGroup.classList.add("hidden");
+    showMessages(0);
+  }
+
+  // Mostra frases do começo do relacionamento uma a uma
+  function showMessages(index) {
+    if (index < frasesRelacionamento.length) {
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.textContent = frasesRelacionamento[index];
+      messagesList.appendChild(div);
+      setTimeout(() => showMessages(index + 1), 1000);
+    } else {
+      typeWriterFinal(0);
+    }
+  }
+
+  // Digita o texto final antes da pergunta
+  function typeWriterFinal(i) {
+    if (i < textoFinal.length) {
+      finalTextElem.textContent += textoFinal.charAt(i);
+      setTimeout(() => typeWriterFinal(i + 1), 50);
+    } else {
+      questionElem.classList.remove("hidden");
+      btnGroup.classList.remove("hidden");
+    }
+  }
+
+  // Vai para a tela final especial antes do WhatsApp
+  function backToFinal() {
+    messagesScreen.classList.add("hidden");
+    finalScreen.classList.remove("hidden");
+    whatsappBtn.disabled = true;
+    whatsappBtn.classList.remove("enabled");
+    whatsappBtn.style.cursor = 'not-allowed';
+    countdownElem.textContent = "";
+    finalMessageInput.value = "";
+
+    let countdown = 5;
+    countdownElem.textContent = `Botão liberado em ${countdown} segundos...`;
+
+    const interval = setInterval(() => {
+      countdown--;
+      if (countdown > 0) {
+        countdownElem.textContent = `Botão liberado em ${countdown} segundos...`;
+      } else {
+        countdownElem.textContent = '';
+        whatsappBtn.disabled = false;
+        whatsappBtn.classList.add("enabled");
+        whatsappBtn.style.cursor = 'pointer';
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
+
+  // Habilita o botão WhatsApp se o campo não estiver vazio
+  finalMessageInput.addEventListener('input', () => {
+    if (finalMessageInput.value.trim().length > 0) {
+      whatsappBtn.disabled = false;
+      whatsappBtn.classList.add("enabled");
+      whatsappBtn.style.cursor = 'pointer';
+      countdownElem.textContent = '';
+    } else {
+      if (whatsappBtn.disabled === false) return; // já liberado pelo countdown
+      whatsappBtn.disabled = true;
+      whatsappBtn.classList.remove("enabled");
+      whatsappBtn.style.cursor = 'not-allowed';
+      countdownElem.textContent = `Botão liberado em ...`;
+    }
+  });
+
+  // Abre WhatsApp com a mensagem automática "eu te amo, vamos conversar"
+whatsappBtn.addEventListener('click', () => {
+  const waNumber = '5547988002129';
+  const waMessage = encodeURIComponent("eu te amo, vamos conversar");
+  const waLink = `https://wa.me/${waNumber}?text=${waMessage}`;
+  window.open(waLink, '_blank');
+});
+
+</script>
+
+</body>
+</html>
